@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>组件</title>
+  <script src="./vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <div>
+      <input type="text" name="username" id="username" v-model="username">
+      <input type="button" value="提交" @click="submitMethod">
+    </div>
+    <div>正常显示</div>
+    <ul>
+      <li v-for="(item, index) in items" :key="index">{{ item }}</li>
+    </ul>
+    <hr>
+    <div>全局组件显示</div>
+    <ul>
+      <!-- 这意味着当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名：，监听show-value事件 -->
+      <item-todo v-for="(item, index) in items" :key="index" :list-name="item" :index="index" @show-value="showItem">
+      </item-todo>
+    </ul>
+    <hr>
+    <div>局部组件显示</div>
+    <ul>
+      <todo-item v-for="(item, index) in items" :key="index" :list-name="item" :index="index">
+      </todo-item>
+    </ul>
+  </div>
+
+
+  <script type="text/javascript">
+    // 全局组件
+    Vue.component('item-todo', {
+      props: ['listName', 'index'],
+      template: '<li @click="handleLi">{{ listName }}</li>',
+      methods: {
+        // 触发模板方法
+        handleLi: function () {
+          // 自定义事件,可以将值传递过来
+          this.$emit('show-value', this.index);
+        },
+      }
+    });
+
+    // 局部组件
+    var todoItem = {
+      props: ['listName', 'index'],
+      template: '<li>{{ listName }}</li>',
+    }
+
+    var app = new Vue({
+      el: '#app',
+      // 注册局部组件
+      components: {
+        'todo-item': todoItem
+      },
+
+      data: {
+        username: '',
+        items: []
+      },
+
+      watch: {
+
+      },
+
+      methods: {
+        submitMethod: function () {
+          console.log(this);
+          console.log(username);
+          console.log(this.username);
+
+          if (this.username !== '') {
+            this.items.push(this.username);
+          }
+
+          this.username = '';
+        },
+
+        showItem: function (index) {
+          alert(this.items[index]);
+          this.items.splice(index, 1);
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>
