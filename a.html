@@ -2,76 +2,85 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>v-bind</title>
-  <script src="./vue.js"></script>
+    <meta charset="utf-8">
+    <title>v-bind</title>
+    <script src="./vue.js"></script>
 </head>
 
 <body>
 
-  <div id="app">
+<div id="app">
     {{ message }}
-  </div>
+</div>
 
-  <!-- v-bind 绑定元素特性 -->
-  <div id="app-2">
+<!-- v-bind 绑定元素特性 -->
+<div id="app-2">
     <span v-bind:title="message">
       提示信息
     </span>
-  </div>
+</div>
 
-  <!-- v-if 可见性 -->
-  <div id="app-3">
+<!-- v-if 可见性 -->
+<div id="app-3">
     <p v-if="message">
-      可见性
+        可见性
     </p>
-  </div>
+</div>
 
-  <!-- v-for 遍历 -->
-  <div id="app-4">
+<!-- v-for 遍历 -->
+<div id="app-4">
     <ol>
-      <li v-for='(todo, index) in todos' :key="index">
-        {{todo.text}}
-      </li>
+        <li v-for='(todo, index) in todos' :key="index">
+            {{todo.text}}
+        </li>
     </ol>
-  </div>
+</div>
 
 
-  <script type="text/javascript">
-    var app = new Vue({
-      el: '#app',
-      data: {
+<script type="text/javascript">
+
+    var data = {
         message: 'Hello Vue!'
-      }
+    };
+
+    var app = new Vue({
+        el: '#app',
+        data: data,
     })
 
+    console.log(app.$data);
+
+    console.log(app.$data === data);
+
+    console.log(app.$el === document.getElementById("app"));
+
     var app2 = new Vue({
-      el: '#app-2',
-      data: {
-        message: '显示' + new Date().toLocaleString()
-      }
+        el: '#app-2',
+        data: {
+            message: '显示' + new Date().toLocaleString()
+        }
     })
 
     var app3 = new Vue({
-      el: '#app-3',
-      data: {
-        message: false
-      }
+        el: '#app-3',
+        data: {
+            message: false
+        }
     })
 
     var app4 = new Vue({
-      el: '#app-4',
-      data: {
-        todos: [{
-            text: "语文"
-          },
-          {
-            text: "数学"
-          }
-        ]
-      }
+        el: '#app-4',
+        data: {
+            todos: [{
+                text: "语文"
+            },
+                {
+                    text: "数学"
+                }
+            ]
+        }
     })
-  </script>
+</script>
 
 </body>
 

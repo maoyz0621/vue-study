@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>form表单</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+
+<h2>v-model双向绑定:会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将Vue 实例的数据作为数据来源。
+    你应该通过 JavaScript 在组件的 data 选项中声明初始值。</h2>
+<ul>
+    <li>
+        text 和 textarea 元素使用 value 属性和 input 事件；
+    </li>
+    <li>
+        checkbox 和 radio 使用 checked 属性和 change 事件；
+    </li>
+    <li>
+        select 字段将 value 作为 prop 并将 change 作为事件。
+    </li>
+</ul>
+
+<div id="app">
+    <h3>input</h3>
+    <input v-model="message" placeholder="输入">
+    <p>Message is: {{ message }}</p>
+    <input type="number" v-model.number="age" placeholder="输入年龄">
+    <p>输入值转为数值类型 age is: {{ age }}</p>
+
+    <input type="text" v-model.trim="msg">
+    <p>自动过滤用户输入的首尾空白字符 msg is: {{ msg }}</p>
+
+    <h3>textarea</h3>
+    <span>Multiline message is:</span>
+    <p style="white-space: pre-line;">{{ textareaMessage }}</p>
+    <br>
+    <textarea v-model="textareaMessage" placeholder="add multiple lines"></textarea>
+
+    <h3>checkbox 没有value值,v-model绑定true/false, 有value值,绑定value值</h3>
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{ checked }}</label>
+    <br>
+
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+    <label for="jack">Jack</label>
+    <input type="checkbox" id="john" value="John" v-model="checkedNames">
+    <label for="john">John</label>
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+    <label for="mike">Mike</label>
+    <br>
+    <span>Checked names: {{ checkedNames }}</span>
+
+    <h3>radio v-model绑定value值</h3>
+    <input type="radio" id="one" value="One" v-model="picked">
+    <label for="one">One</label>
+    <br>
+    <input type="radio" id="two" value="Two" v-model="picked">
+    <label for="two">Two</label>
+    <br>
+    <span>Picked: {{ picked }}</span>
+
+    <h3>select v-model绑定option的value值</h3>
+    <select v-model="selected">
+        <option disabled value="">请选择</option>
+        <option value="1">A</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+
+    <h3>select多选 v-model绑定option的value值</h3>
+    <select v-model="mulSelected" multiple>
+        <option disabled value="">请选择</option>
+        <option value="1">A</option>
+        <option value="2">B</option>
+        <option value="3">C</option>
+    </select>
+    <span>Selected: {{ mulSelected }}</span>
+
+    <h3>form表单 v-for循环, options是option项的值</h3>
+    <select v-model="forSelected">
+        <option v-for="(option, index) in options" :key="index" v-bind:value="option.value">
+            {{ option.text }}
+        </option>
+    </select>
+    <span>Selected: {{ forSelected }}</span>
+
+</div>
+
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            age: 0,
+            msg: '',
+            message: '',
+            textareaMessage: '',
+            checked: 1111,
+            checkedNames: [],
+            picked: '',
+            selected: '',
+            mulSelected: [],
+            forSelected: '',
+            options: [
+                {text: 'One', value: 'A'},
+                {text: 'Two', value: 'B'},
+                {text: 'Three', value: 'C'}
+            ]
+        },
+
+    })
+
+</script>
+
+</body>
+
+</html>
